@@ -1,0 +1,108 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #03586E;
+    font-family: sans-serif;
+}
+
+/* HEADER FIXO */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 25px;
+    background-color: #08323E;
+    color: white;
+    text-align: center;
+    line-height: 25px;
+ 
+}
+
+/* MENU LATERAL FIXO */
+.painel-lateral {
+    position: fixed;
+    top: 25px;
+    left: 0;
+    width: 180px;
+    height: calc(100vh - 25px);
+    background-color: #08323E;
+    padding: 20px 0 0 20px;
+    overflow-y: auto;
+}
+
+.navegacao-lateral ul li {
+    margin-bottom: 10px;
+}
+
+.menus {
+    
+    display: inline-block; /* necessário para largura/altura funcionarem no <a> */
+    background-color: #174c6d7c;
+    border: none;
+    width: 150px;
+    height: 35px;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+    line-height: 35px; /* centraliza o texto verticalmente */
+    text-decoration: none; /* remove sublinhado dos links */
+    font-family: inherit; /* mantém a fonte consistente */
+    font-size: 15px;
+}
+
+
+
+.menus:hover {
+    background-color: #126ca47c;
+}
+
+.menus:active {
+    background-color: #08323E;
+}
+
+.img-menu {
+    margin-top: 20px;
+    width: 150px;
+}
+
+/* CONTEÚDO PRINCIPAL */
+.conteudo {
+    margin-left: 180px; /* Largura do menu */
+    padding: 45px 20px 20px 20px; /* Topo: altura do header + espaçamento */
+    color: white;
+    min-height: calc(100vh - 25px);
+    background-color: #046B85;
+ 
+}
+
+input{
+    width: 300px;
+    height: 34px;
+    border: none;
+    margin-bottom: 7px;
+    border-radius: 10px;
+    outline: none;
+    padding: 10px;
+    
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+   
+
+
+}
+
+    
+
+
