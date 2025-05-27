@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <h2 class="mb-4">Cadastro de Livro</h2>
-<form method="post" enctype="multipart/form-data"></form>
+<form method="post" enctype="multipart/form-data">
     <div class="row mb-3">
         <div class="col-md-4">
             <label for="titulo" class="form-label">Título</label>
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="col-md-4">
             <label for="genero" class="form-label">Gênero</label>
-            <input type="text" class="form-control" id="genero" name="genero" required></div>
+            <input type="text" class="form-control" id="genero" name="genero" required>
         </div>
     </div>
     <div class="row mb-3">

@@ -19,9 +19,9 @@
                 <li class="menu"><a href="?pagina=cadastrar_aluguel" class="menus">Cadastrar Aluguel </a></li>
                 <li class="menu"><a href="?pagina=cadastrar_livros" class="menus">Cadastrar Livros </a></li>
                 <li class="menu"><a href="?pagina=cadastrar_usuario" class="menus">Cadastrar Usuários</a></li>
-                <li class="menu"><a href="?pagina=verificar-alugueis" class="menus">Verificar Aluguéis</a></li>
-                <li class="menu"><a href="" class="menus">Verificar Livros</a></li>
-                <li class="menu"><a href="" class="menus">Verificar Usuários</a></li>
+                <li class="menu"><a href="?pagina=verificar_aluguel" class="menus">Verificar Aluguéis</a></li>
+                <li class="menu"><a href="?pagina=verificar_livros" class="menus">Verificar Livros</a></li>
+                <li class="menu"><a href="?pagina=verificar_usuario" class="menus">Verificar Usuários</a></li>
             </ul>
 
         </nav>
