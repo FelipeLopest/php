@@ -1,15 +1,6 @@
 <?php
 require_once(__DIR__ . '/funcao.php');
 
-// Função para buscar todos os livros
-function listar_livros()
-{
-    $cx = conectar();
-    $sql = "SELECT * FROM livros";
-    $stmt = $cx->query($sql);
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
 // Excluir livro
 if (isset($_GET['excluir'])) {
     $id = (int)$_GET['excluir'];
@@ -33,11 +24,14 @@ if (isset($_GET['alterar'])) {
 if (isset($_POST['id_alterar'])) {
     $cx = conectar();
     $novoCaminhoImagem = $_POST['imagem_atual'];
+
     if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-        $nomeArquivo = uniqid() . '_' . $_FILES['imagem']['name'];
+        $nomeArquivo = uniqid() . '_' . basename($_FILES['imagem']['name']);
+        $destino = __DIR__ . '/../assets/' . $nomeArquivo;
+        move_uploaded_file($_FILES['imagem']['tmp_name'], $destino);
         $novoCaminhoImagem = 'assets/' . $nomeArquivo;
-        move_uploaded_file($_FILES['imagem']['tmp_name'], __DIR__ . '/../assets/' . $nomeArquivo);
     }
+
     $sql = "UPDATE livros SET titulo = :titulo, autor = :autor, genero = :genero, quantidade = :quantidade, imagem = :imagem WHERE id = :id";
     $stmt = $cx->prepare($sql);
     $stmt->execute([
@@ -48,23 +42,45 @@ if (isset($_POST['id_alterar'])) {
         ':imagem' => $novoCaminhoImagem,
         ':id' => $_POST['id_alterar']
     ]);
+
     echo '<p>Livro alterado com sucesso!</p>';
     $livro_editar = null;
 }
 
-$livros = listar_livros();
+// Listar livros (filtrando por nome se fornecido)
+if (isset($_POST['nome']) && $_POST['nome'] !== '') {
+    $livros = listar_livros_por_nome($_POST['nome']);
+} else {
+    $livros = listar_livros_por_nome();
+}
 ?>
 
+<!-- Formulário de filtro -->
+<form method="POST" class="mb-3">
+    <div class="input-group">
+        <input
+            type="text"
+            name="nome"
+            class="form-control"
+            placeholder="Filtrar por nome"
+            value="<?= isset($_POST['nome']) ? htmlspecialchars($_POST['nome']) : '' ?>">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-search"></i> Filtrar
+        </button>
+    </div>
+</form>
+
+<!-- Lista de livros -->
 <h2>Lista de Livros</h2>
 <div style="display: flex; flex-wrap: wrap; gap: 20px;">
     <?php foreach ($livros as $livro): ?>
-        <div style="width: 220px; border: 1px solid #ccc; border-radius: 8px; background:rgb(60, 16, 202); padding: 10px; box-shadow: 2px 2px 8px #0001; text-align: center;">
+        <div style="width: 220px; border: 1px solid #ccc; border-radius: 8px; background: rgb(60, 16, 202); padding: 10px; box-shadow: 2px 2px 8px #0001; text-align: center;">
             <img src="<?= htmlspecialchars($livro['imagem']) ?>" alt="Capa do livro" style="width: 180px; height: 240px; object-fit: cover; border-radius: 4px; margin-bottom: 10px;">
             <h4><?= htmlspecialchars($livro['titulo']) ?></h4>
-            <p><strong>ID:</strong> <?= htmlspecialchars($livro['id']) ?></p>
+            <p><strong>ID:</strong> <?= $livro['id'] ?></p>
             <p><strong>Autor:</strong> <?= htmlspecialchars($livro['autor']) ?></p>
             <p><strong>Gênero:</strong> <?= htmlspecialchars($livro['genero']) ?></p>
-            <p><strong>Quantidade:</strong> <?= htmlspecialchars($livro['quantidade']) ?></p>
+            <p><strong>Quantidade:</strong> <?= $livro['quantidade'] ?></p>
             <div style="margin-top: 10px;">
                 <a href="?pagina=verificar_livros&alterar=<?= $livro['id'] ?>">Alterar</a> |
                 <a href="?pagina=verificar_livros&excluir=<?= $livro['id'] ?>" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</a>
@@ -73,6 +89,7 @@ $livros = listar_livros();
     <?php endforeach; ?>
 </div>
 
+<!-- Formulário para alterar livro -->
 <?php if ($livro_editar): ?>
     <h3>Alterar Livro</h3>
     <form method="post" enctype="multipart/form-data">

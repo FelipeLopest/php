@@ -70,3 +70,60 @@ function cadastrar_livros($dados): void
         echo $ex;
     }
 }
+
+function listar_alugueis()
+{
+    $cx = conectar();
+    $sql = "SELECT * FROM emprestimo";
+    $stmt = $cx->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function listar_livros()
+{
+    $cx = conectar();
+    $sql = "SELECT * FROM livros";
+    $stmt = $cx->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function listar_alugueis_por_nome_usuario($nome = "")
+{
+    $cx = conectar();
+    if ($nome != "") {
+        $sql = "SELECT e.*, u.nome as nome_usuario FROM emprestimo e
+                JOIN usuario u ON e.id_usuario = u.id
+                WHERE u.nome LIKE '%$nome%'";
+        $stmt = $cx->query($sql);
+    } else {
+        $sql = "SELECT e.*, u.nome as nome_usuario FROM emprestimo e
+                JOIN usuario u ON e.id_usuario = u.id";
+        $stmt = $cx->query($sql);
+    }
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+function listar_livros_por_nome($nome = "")
+{
+    $cx = conectar();
+    if ($nome != "") {
+        $sql = "SELECT * FROM livros WHERE titulo LIKE '%$nome%'";
+        $stmt = $cx->query($sql);
+    } else {
+        $sql = "SELECT * FROM livros";
+        $stmt = $cx->query($sql);
+    }
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function listar_usuarios_por_nome($nome = "")
+{
+    $cx = conectar();
+    if ($nome != "") {
+        $sql = "SELECT * FROM usuario WHERE nome LIKE '%$nome%'";
+        $stmt = $cx->query($sql);
+    } else {
+        $sql = "SELECT * FROM usuario";
+        $stmt = $cx->query($sql);
+    }
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

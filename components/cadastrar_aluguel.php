@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="col-md-4">
             <label for="sobrenome" class="form-label">Data de Emprestimo</label>
-            <input type="text" class="form-control" id="sobrenome" name="data_emprestimo">
+            <input type="date" class="form-control" id="sobrenome" name="data_emprestimo">
         </div>
     </div>
 
